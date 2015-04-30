@@ -32,7 +32,7 @@ EXPOSE 8090
 
 VOLUME ["/var/atlassian/confluence", "/usr/local/atlassian/confluence", "/usr/local/atlassian/confluence-data"]
 
-ENV CONF_VERSION    5.7.3
+ENV CONF_VERSION    4.0.7
 # Grab Confluence, extract it and prepare folders and configs
 RUN set -x \
     && curl -OLs "http://downloads.atlassian.com/software/confluence/downloads/confluence-${CONF_VERSION}-std.tar.gz" \
