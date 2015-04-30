@@ -28,11 +28,11 @@ RUN set -x \
 COPY startup.sh /startup.sh
 RUN chmod +x /startup.sh
 
-EXPOSE 8090
+EXPOSE 8080
 
 VOLUME ["/var/atlassian/confluence", "/usr/local/atlassian/confluence", "/usr/local/atlassian/confluence-data"]
 
-ENV CONF_VERSION    5.7.3
+ENV CONF_VERSION    3.5.13
 # Grab Confluence, extract it and prepare folders and configs
 RUN set -x \
     && curl -OLs "http://downloads.atlassian.com/software/confluence/downloads/confluence-${CONF_VERSION}-std.tar.gz" \
