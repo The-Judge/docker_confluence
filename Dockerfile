@@ -35,9 +35,8 @@ VOLUME ["/var/atlassian/confluence", "/usr/local/atlassian/confluence", "/usr/lo
 ENV CONF_VERSION    4.2.13
 # Grab Confluence, extract it and prepare folders and configs
 RUN set -x \
-    && curl -OLs "http://downloads.atlassian.com/software/confluence/downloads/confluence-${CONF_VERSION}.tar.gz" \
-    && tar -xzf "confluence-${CONF_VERSION}.tar.gz" --directory "${CONF_INST}/" --strip-components=1 \
-    && rm -f "confluence-${CONF_VERSION}.tar.gz" \
+    && curl -Ls "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz" \
+    | tar -xz --directory "${CONF_INST}/" --strip-components=1 \
     && chmod -R 777 "${CONF_INST}/temp" \
     && chmod -R 777 "${CONF_INST}/logs" \
     && chmod -R 777 "${CONF_INST}/work" \
