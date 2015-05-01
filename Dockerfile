@@ -36,8 +36,8 @@ ENV CONF_VERSION    5.2.5
 # Grab Confluence, extract it and prepare folders and configs
 RUN set -x \
     && curl -OLs "http://downloads.atlassian.com/software/confluence/downloads/confluence-${CONF_VERSION}.tar.gz" \
-    && tar -xzf "confluence-${CONF_VERSION}-std.tar.gz" --directory "${CONF_INST}/" --strip-components=1 \
-    && rm -f "confluence-${CONF_VERSION}-std.tar.gz" \
+    && tar -xzf "confluence-${CONF_VERSION}.tar.gz" --directory "${CONF_INST}/" --strip-components=1 \
+    && rm -f "confluence-${CONF_VERSION}.tar.gz" \
     && chmod -R 777 "${CONF_INST}/temp" \
     && chmod -R 777 "${CONF_INST}/logs" \
     && chmod -R 777 "${CONF_INST}/work" \
