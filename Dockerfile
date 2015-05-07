@@ -5,7 +5,7 @@ MAINTAINER Marc Richter <mail@marc-richter.info>
 # setup useful environment variables
 ENV CONF_HOME       /usr/local/atlassian/confluence-data
 ENV CONF_INST       /usr/local/atlassian/confluence
-ENV CONF_SETENV     /usr/local/atlassian/confluence/bin/setenv.sh
+ENV CONF_SETENV     ${CONF_INST}/bin/setenv.sh
 ENV PG_VERSION      9.4
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -43,10 +43,10 @@ RUN set -x \
     && echo -e "\nconfluence.home=${CONF_HOME}" >> "${CONF_INST}/confluence/WEB-INF/classes/confluence-init.properties"
 # Tune Confluence Settings
 RUN set -x \
-    && sed -i'' 's#Xms256m#Xms1024m#g' ${CONF_SETENV} \
-    && sed -i'' 's#Xmx512m#Xmx2048m#g' ${CONF_SETENV} \
-    && sed -i'' 's#MaxPermSize=256m#MaxPermSize=1024m#g' ${CONF_SETENV} \
-    && sed -i'' 's#^\(JAVA_OPTS.*\)"#\1-XX:-UseGCOverheadLimit"#g' ${CONF_SETENV}
+    && sed -i'' 's#Xms256m#Xms1024m#g' ${CONF_SETENV}
+    #&& sed -i'' 's#Xmx512m#Xmx2048m#g' ${CONF_SETENV} \
+    #&& sed -i'' 's#MaxPermSize=256m#MaxPermSize=1024m#g' ${CONF_SETENV} \
+    #&& sed -i'' 's#^\(JAVA_OPTS.*\)"#\1-XX:-UseGCOverheadLimit"#g' ${CONF_SETENV}
 
 CMD ["/startup.sh"]
 
