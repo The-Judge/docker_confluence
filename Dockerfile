@@ -28,7 +28,7 @@ RUN set -x \
 COPY startup.sh /startup.sh
 RUN chmod +x /startup.sh
 
-EXPOSE 8080
+EXPOSE 8090
 
 ENV CONF_VERSION    4.2.13
 # Grab Confluence, extract it and prepare folders and configs
