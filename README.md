@@ -33,12 +33,12 @@ fastest and easiest way to bring up the most recent version of [Atlassian
 Confluence](https://www.atlassian.com/software/confluence) to life. Just type
 the following on any Docker-Host:
 
-    docker run -p 8080:8080 -d derjudge/confluence
+    docker run -p 8080:8090 -d derjudge/confluence
 
 **Notice**: This is true for all versions, instead of '3.5.*'. Use the following
 for these instead (replace '3.5.17' with the version you want to start):
 
-    docker run -p 8080:8090 -d derjudge/confluence:3.5.17
+    docker run -p 8080:8080 -d derjudge/confluence:3.5.17
 
 Both variants will take some time to load. You might notice an increased use on
 system resources; especially CPU usage will temporary grow up to 100% on one or
