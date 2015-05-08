@@ -49,4 +49,3 @@ RUN set -x \
 VOLUME ["/var/atlassian/confluence", "/usr/local/atlassian/confluence", "/usr/local/atlassian/confluence-data"]
 
 CMD ["/startup.sh"]
-
