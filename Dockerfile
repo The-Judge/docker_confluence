@@ -33,7 +33,7 @@ EXPOSE 8080
 ENV CONF_VERSION    3.5.17
 # Grab Confluence, extract it and prepare folders and configs
 RUN set -x \
-    && curl -Ls "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}-std.tar.gz" \
+    && curl -Ls "https://www.atlassian.com/software/confluence/downloads/binary/confluence-${CONF_VERSION}-std.tar.gz" \
     | tar -xz --directory "${CONF_INST}/" --strip-components=1 \
     && chmod -R 777 "${CONF_INST}/temp" \
     && chmod -R 777 "${CONF_INST}/logs" \
