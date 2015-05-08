@@ -3,9 +3,9 @@ FROM java:7
 MAINTAINER Marc Richter <mail@marc-richter.info>
 
 # setup useful environment variables
-ENV CONF_HOME       /usr/local/atlassian/confluence-data
 ENV CONF_INST       /usr/local/atlassian/confluence
-ENV CONF_SETENV     /usr/local/atlassian/confluence/bin/setenv.sh
+ENV CONF_HOME       ${CONF_INST}-data
+ENV CONF_SETENV     ${CONF_INST}/bin/setenv.sh
 ENV PG_VERSION      9.4
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -30,12 +30,10 @@ RUN chmod +x /startup.sh
 
 EXPOSE 8080
 
-VOLUME ["/var/atlassian/confluence", "/usr/local/atlassian/confluence", "/usr/local/atlassian/confluence-data"]
-
 ENV CONF_VERSION    3.5.13
 # Grab Confluence, extract it and prepare folders and configs
 RUN set -x \
-    && curl -Ls "https://www.atlassian.com/software/confluence/downloads/binary/confluence-${CONF_VERSION}-std.tar.gz" \
+    && curl -Ls "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}-std.tar.gz" \
     | tar -xz --directory "${CONF_INST}/" --strip-components=1 \
     && chmod -R 777 "${CONF_INST}/temp" \
     && chmod -R 777 "${CONF_INST}/logs" \
@@ -45,8 +43,9 @@ RUN set -x \
 RUN set -x \
     && sed -i'' 's#Xms256m#Xms1024m#g' ${CONF_SETENV} \
     && sed -i'' 's#Xmx512m#Xmx2048m#g' ${CONF_SETENV} \
-    && sed -i'' 's#MaxPermSize=256m#MaxPermSize=1024m#g' ${CONF_SETENV} \
+    && sed -i'' 's#MaxPermSize=256m#MaxPermSize=2048m#g' ${CONF_SETENV} \
     && sed -i'' 's#^\(JAVA_OPTS.*\)"#\1-XX:-UseGCOverheadLimit"#g' ${CONF_SETENV}
 
-CMD ["/startup.sh"]
+VOLUME ["/var/atlassian/confluence", "/usr/local/atlassian/confluence", "/usr/local/atlassian/confluence-data"]
 
+CMD ["/startup.sh"]
