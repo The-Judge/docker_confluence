@@ -30,7 +30,7 @@ RUN chmod +x /startup.sh
 
 EXPOSE 8090
 
-ENV CONF_VERSION    5.7.3
+ENV CONF_VERSION    5.7.4
 # Grab Confluence, extract it and prepare folders and configs
 RUN set -x \
     && curl -Ls "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz" \
