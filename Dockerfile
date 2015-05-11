@@ -46,6 +46,6 @@ RUN set -x \
     && sed -i'' 's#MaxPermSize=256m#MaxPermSize=2048m#g' ${CONF_SETENV} \
     && sed -i'' 's#^\(JAVA_OPTS.*\)"#\1-XX:-UseGCOverheadLimit"#g' ${CONF_SETENV}
 
-VOLUME ["/var/atlassian/confluence", "/usr/local/atlassian/confluence", "/usr/local/atlassian/confluence-data"]
+VOLUME ["/var/atlassian/confluence", "/usr/local/atlassian/confluence", "/usr/local/atlassian/confluence-data", "/var/lib/postgresql"]
 
 CMD ["/startup.sh"]
