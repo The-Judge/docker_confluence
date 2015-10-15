@@ -22,7 +22,7 @@ RUN set -x \
     && sed -i'' 's/peer/trust/g' /etc/postgresql/${PG_VERSION}/main/pg_hba.conf \
     && sed -i'' 's/md5/trust/g' /etc/postgresql/${PG_VERSION}/main/pg_hba.conf \
     && /etc/init.d/postgresql start \
-    && /usr/bin/psql -U postgres -c "CREATE DATABASE confluence;" \
+    && /usr/bin/psql -U postgres -c "CREATE DATABASE confluence ENCODING = UTF8;" \
     && /etc/init.d/postgresql stop
 
 COPY startup.sh /startup.sh
