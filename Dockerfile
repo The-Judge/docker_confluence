@@ -47,7 +47,7 @@ RUN set -x \
     && sed -i'' 's#Xmx1024m#Xmx2048m#g' ${CONF_SETENV}
 
 # Install Oracle JDK
-RUN mkdir -p /opt/jdk \
+RUN mkdir -p /opt/jdk
 ADD jdk-${JAVA_VERSION_SHORT}-linux-x64.tar.gz /opt/jdk
 RUN update-alternatives --install /usr/bin/java java /opt/jdk/jdk${JAVA_VERSION}/bin/java 100
 RUN update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk${JAVA_VERSION}/bin/javac 100
