@@ -48,9 +48,7 @@ RUN set -x \
 
 # Install Oracle JDK
 RUN mkdir -p /opt/jdk \
-    && wget -q --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-        http://download.oracle.com/otn/java/jdk/${JAVA_VERSION_FULL}/jdk-${JAVA_VERSION_SHORT}-linux-x64.tar.gz -O - \
-        | tar xfz - -C /opt/jdk
+ADD jdk-${JAVA_VERSION_SHORT}-linux-x64.tar.gz /opt/jdk
 RUN update-alternatives --install /usr/bin/java java /opt/jdk/jdk${JAVA_VERSION}/bin/java 100
 RUN update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk${JAVA_VERSION}/bin/javac 100
 
