@@ -1,4 +1,5 @@
 #!/bin/bash
-/etc/init.d/postgresql start
+pg_ctlcluster 9.4 main start -- -w
+sleep 20
 /usr/local/atlassian/confluence/bin/catalina.sh run
 
