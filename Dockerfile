@@ -6,9 +6,9 @@ ENV CONF_INST           /usr/local/atlassian/confluence
 ENV CONF_HOME           ${CONF_INST}-data
 ENV CONF_SETENV         ${CONF_INST}/bin/setenv.sh
 ENV PG_VERSION          9.4
-ENV JAVA_VERSION        1.8.0_60
-ENV JAVA_VERSION_SHORT  8u60
-ENV JAVA_VERSION_FULL   ${JAVA_VERSION_SHORT}-b27
+ENV JAVA_VERSION        1.7.0_80
+ENV JAVA_VERSION_SHORT  7u80
+ENV JAVA_VERSION_FULL   ${JAVA_VERSION_SHORT}-b15
 ENV JAVA_HOME           /opt/jdk/jdk${JAVA_VERSION}
 ENV DEBIAN_FRONTEND     noninteractive
 
@@ -33,7 +33,7 @@ RUN set -x \
 COPY startup.sh /startup.sh
 RUN chmod +x /startup.sh
 
-ENV CONF_VERSION    5.8.14
+ENV CONF_VERSION    5.0.3
 # Grab Confluence, extract it and prepare folders and configs
 RUN set -x \
     && curl -Ls "https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz" \
@@ -49,7 +49,7 @@ RUN set -x \
 # Install Oracle JDK
 RUN mkdir -p /opt/jdk \
     && wget -q --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-        http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_FULL}/jdk-${JAVA_VERSION_SHORT}-linux-x64.tar.gz -O - \
+        http://download.oracle.com/otn/java/jdk/${JAVA_VERSION_FULL}/jdk-${JAVA_VERSION_SHORT}-linux-x64.tar.gz -O - \
         | tar xfz - -C /opt/jdk
 RUN update-alternatives --install /usr/bin/java java /opt/jdk/jdk${JAVA_VERSION}/bin/java 100
 RUN update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk${JAVA_VERSION}/bin/javac 100
