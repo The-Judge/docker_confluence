@@ -1,34 +1,37 @@
-FROM java:7
-# Adapted from http://bit.ly/1qZAmGA
+FROM debian:jessie
 MAINTAINER Marc Richter <mail@marc-richter.info>
 
 # setup useful environment variables
-ENV CONF_INST       /usr/local/atlassian/confluence
-ENV CONF_HOME       ${CONF_INST}-data
-ENV CONF_SETENV     ${CONF_INST}/bin/setenv.sh
-ENV PG_VERSION      9.4
-ENV DEBIAN_FRONTEND noninteractive
+ENV CONF_INST           /usr/local/atlassian/confluence
+ENV CONF_HOME           ${CONF_INST}-data
+ENV CONF_SETENV         ${CONF_INST}/bin/setenv.sh
+ENV PG_VERSION          9.4
+ENV JAVA_VERSION        1.8.0_60
+ENV JAVA_VERSION_SHORT  8u60
+ENV JAVA_VERSION_FULL   ${JAVA_VERSION_SHORT}-b27
+ENV JAVA_HOME           /opt/jdk/jdk${JAVA_VERSION}
+ENV DEBIAN_FRONTEND     noninteractive
 
 # Update System and install necessary packages
 RUN set -x \
     && apt-get update -q \
     && apt-get dist-upgrade -y -q \
-    && apt-get install -y -q postgresql-${PG_VERSION} postgresql-client
+    && apt-get install -y -q postgresql-${PG_VERSION} postgresql-client wget curl
 # Create needed folders
 RUN set -x \
     && mkdir -p "${CONF_HOME}" "${CONF_INST}"
 # Prepare PostgreSQL
 RUN set -x \
+    && pg_dropcluster 9.4 main \
+    && pg_createcluster -e 'UTF-8' 9.4 main \
     && sed -i'' 's/peer/trust/g' /etc/postgresql/${PG_VERSION}/main/pg_hba.conf \
     && sed -i'' 's/md5/trust/g' /etc/postgresql/${PG_VERSION}/main/pg_hba.conf \
-    && /etc/init.d/postgresql start \
-    && /usr/bin/psql -U postgres -c "CREATE DATABASE confluence ENCODING = UTF8;" \
-    && /etc/init.d/postgresql stop
+    && pg_ctlcluster 9.4 main start -- -w \
+    && /usr/bin/psql -U postgres -c "CREATE DATABASE confluence ENCODING = 'UTF8';" \
+    && pg_ctlcluster 9.4 main stop -- -m fast
 
 COPY startup.sh /startup.sh
 RUN chmod +x /startup.sh
-
-EXPOSE 8090
 
 ENV CONF_VERSION    5.8.14
 # Grab Confluence, extract it and prepare folders and configs
@@ -41,11 +44,22 @@ RUN set -x \
     && echo -e "\nconfluence.home=${CONF_HOME}" >> "${CONF_INST}/confluence/WEB-INF/classes/confluence-init.properties"
 # Tune Confluence Settings
 RUN set -x \
-    && sed -i'' 's#Xms256m#Xms1024m#g' ${CONF_SETENV} \
-    && sed -i'' 's#Xmx512m#Xmx2048m#g' ${CONF_SETENV} \
-    && sed -i'' 's#MaxPermSize=256m#MaxPermSize=2048m#g' ${CONF_SETENV} \
-    && sed -i'' 's#^\(JAVA_OPTS.*\)"#\1-XX:-UseGCOverheadLimit"#g' ${CONF_SETENV}
+    && sed -i'' 's#Xmx1024m#Xmx2048m#g' ${CONF_SETENV}
 
-VOLUME ["/var/atlassian/confluence", "/usr/local/atlassian/confluence", "/usr/local/atlassian/confluence-data", "/var/lib/postgresql"]
+# Install Oracle JDK
+RUN mkdir -p /opt/jdk \
+    && wget -q --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+        http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_FULL}/jdk-${JAVA_VERSION_SHORT}-linux-x64.tar.gz -O - \
+        | tar xfz - -C /opt/jdk
+RUN update-alternatives --install /usr/bin/java java /opt/jdk/jdk${JAVA_VERSION}/bin/java 100
+RUN update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk${JAVA_VERSION}/bin/javac 100
+
+#VOLUME /var/atlassian/confluence
+#VOLUME /usr/local/atlassian/confluence
+#VOLUME /usr/local/atlassian/confluence-data
+#VOLUME /var/lib/postgresql
+
+EXPOSE 8090
+EXPOSE 8080
 
 CMD ["/startup.sh"]
