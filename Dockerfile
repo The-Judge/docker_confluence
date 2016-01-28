@@ -2,14 +2,14 @@ FROM debian:jessie
 MAINTAINER Marc Richter <mail@marc-richter.info>
 
 # setup useful environment variables
-ENV CONF_VERSION        5.9.2
+ENV CONF_VERSION        5.9.4
 ENV CONF_INST           /usr/local/atlassian/confluence
 ENV CONF_HOME           ${CONF_INST}-data
 ENV CONF_SETENV         ${CONF_INST}/bin/setenv.sh
 ENV PG_VERSION          9.4
-ENV JAVA_VERSION        1.8.0_65
-ENV JAVA_VERSION_SHORT  8u65
-ENV JAVA_VERSION_FULL   ${JAVA_VERSION_SHORT}-b17
+ENV JAVA_VERSION        1.8.0_72
+ENV JAVA_VERSION_SHORT  8u72
+ENV JAVA_VERSION_FULL   ${JAVA_VERSION_SHORT}-b15
 ENV JAVA_HOME           /opt/jdk/jdk${JAVA_VERSION}
 ENV DEBIAN_FRONTEND     noninteractive
 
@@ -23,13 +23,13 @@ RUN set -x \
     && mkdir -p "${CONF_HOME}" "${CONF_INST}"
 # Prepare PostgreSQL
 RUN set -x \
-    && pg_dropcluster 9.4 main \
-    && pg_createcluster -e 'UTF-8' 9.4 main \
+    && pg_dropcluster ${PG_VERSION} main \
+    && pg_createcluster -e 'UTF-8' ${PG_VERSION} main \
     && sed -i'' 's/peer/trust/g' /etc/postgresql/${PG_VERSION}/main/pg_hba.conf \
     && sed -i'' 's/md5/trust/g' /etc/postgresql/${PG_VERSION}/main/pg_hba.conf \
-    && pg_ctlcluster 9.4 main start -- -w \
+    && pg_ctlcluster ${PG_VERSION} main start -- -w \
     && /usr/bin/psql -U postgres -c "CREATE DATABASE confluence ENCODING = 'UTF8';" \
-    && pg_ctlcluster 9.4 main stop -- -m fast
+    && pg_ctlcluster ${PG_VERSION} main stop -- -m fast
 
 COPY startup.sh /startup.sh
 RUN chmod +x /startup.sh
