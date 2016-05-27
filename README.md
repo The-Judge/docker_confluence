@@ -71,8 +71,9 @@ You can determine that everything has started by the following:
 * the line `INFO: Server startup in X ms` appears in `/usr/local/atlassian/confluence/logs/catalina.*.log` (inside the
 container; use [`docker-enter/nsenter`](https://github.com/jpetazzo/nsenter) to enter the container).
 * A ... "positive" line appears in `/usr/local/atlassian/confluence-data/logs/atlassian-confluence.log`. This will be
- something like `init Plugin system started` or `TODO`. What you see there exactly heavily depends on the Confluence
- version you are starting. Again, I'm speaking about the file inside the container; use
+ something like `init Plugin system started` or `init Confluence is ready to serve`.
+ What you see there exactly heavily depends on the Confluence version you are
+ starting. Again, I'm speaking about the file inside the container; use
  [`docker-enter/nsenter`](https://github.com/jpetazzo/nsenter) to enter the container.
  
 Once everything has started, you should be able to point your browser to
