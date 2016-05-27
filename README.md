@@ -40,7 +40,7 @@ their states are kind of freezed in the state they are when initially created to
 keep backward compatibility as best as possible. No updates or enhancements,
 **neither security nor features**, will be backported from latest.
 
-This is why `latest` is the only recommended tag to be used in production environments.
+**This is why `latest` is the only recommended tag to be used in production environments.**
 
 # Getting started
 
