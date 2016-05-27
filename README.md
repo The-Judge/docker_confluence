@@ -23,10 +23,10 @@ ancient tags/branches are contained in this container.
 3. As of October, 20th 2015 this container doesn't use the java parent image anymore but
 debian:jessie.
 
-There are multiple branches named like the corresponding version of [Atlassian
-Confluence](https://www.atlassian.com/software/confluence) it contains. Please
-see [Docker image's tags](https://registry.hub.docker.com/u/derjudge/confluence/tags/manage/)
- to get a list of all versions supported so far.
+There are multiple branches named like the corresponding version of [Atlassian Confluence](https://www.atlassian.com/software/confluence)
+it contains. Please see
+[Docker image's tags](https://registry.hub.docker.com/u/derjudge/confluence/tags/)
+to get a list of all versions supported so far.
 
 # Important security notice
 
