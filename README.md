@@ -28,6 +28,20 @@ Confluence](https://www.atlassian.com/software/confluence) it contains. Please
 see [Docker image's tags](https://registry.hub.docker.com/u/derjudge/confluence/tags/manage/)
  to get a list of all versions supported so far.
 
+# Important security notice
+
+This image offers a tag `latest` and several tags named in a `X.Y.Z` schema.
+
+The later are meant to be used when needed in special scenarios like migrations to
+a more recent version, starting from these older ones, restoring backups from that
+specific version or staying on that version due to an expired license; **they are
+not intended to be used longer than temporarly in production environments!** Thus,
+their states are kind of freezed in the state they are when initially created to
+keep backward compatibility as best as possible. No updates or enhancements,
+**neither security nor features**, will be backported from latest.
+
+This is why `latest` is the only recommended tag to be used in production environments.
+
 # Getting started
 
 Since this image is for the impatient fellows out there, let's start with the
