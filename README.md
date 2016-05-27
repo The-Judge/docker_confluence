@@ -20,6 +20,8 @@ The reason I started this image is that I had to migrate an existing Instance of
 Confluence which was powered by version 3.5.13 of the software to the recent
 version (which is 5.7.4, at the time of this writing). That's why all the
 ancient tags/branches are contained in this container.
+3. As of October, 20th 2015 this container doesn't use the java parent image anymore but
+debian:jessie.
 
 There are multiple branches named like the corresponding version of [Atlassian
 Confluence](https://www.atlassian.com/software/confluence) it contains. Please
