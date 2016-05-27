@@ -25,7 +25,7 @@ debian:jessie.
 
 There are multiple branches named like the corresponding version of [Atlassian Confluence](https://www.atlassian.com/software/confluence)
 it contains. Please see
-[Docker image's tags](https://registry.hub.docker.com/u/derjudge/confluence/tags/)
+[Docker image's tags](https://hub.docker.com/r/derjudge/confluence/tags/)
 to get a list of all versions supported so far.
 
 # Important security notice
