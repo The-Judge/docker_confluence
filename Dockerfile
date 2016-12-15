@@ -2,14 +2,14 @@ FROM debian:jessie
 MAINTAINER Marc Richter <mail@marc-richter.info>
 
 # setup useful environment variables
-ENV CONF_VERSION        5.10.0
+ENV CONF_VERSION        6.0.2
 ENV CONF_INST           /usr/local/atlassian/confluence
 ENV CONF_HOME           ${CONF_INST}-data
 ENV CONF_SETENV         ${CONF_INST}/bin/setenv.sh
-ENV PG_VERSION          9.4
-ENV JAVA_VERSION        1.8.0_92
-ENV JAVA_VERSION_SHORT  8u92
-ENV JAVA_VERSION_FULL   ${JAVA_VERSION_SHORT}-b14
+ENV PG_VERSION          9.3
+ENV JAVA_VERSION        1.8.0_112
+ENV JAVA_VERSION_SHORT  8u112
+ENV JAVA_VERSION_FULL   ${JAVA_VERSION_SHORT}-b15
 ENV JAVA_HOME           /opt/jdk/jdk${JAVA_VERSION}
 ENV DEBIAN_FRONTEND     noninteractive
 
