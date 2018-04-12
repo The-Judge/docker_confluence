@@ -8,10 +8,10 @@ located at the following places:
 * Git-Repository: [https://bitbucket.org/Judge82/docker_confluence.git](https://bitbucket.org/Judge82/docker_confluence.git)
 
 I started this project as a fork of [cptactionhank/atlassian-confluence](https://registry.hub.docker.com/u/cptactionhank/atlassian-confluence),
-because I wanted to change two things in it:
+because I wanted to change some things in it:
 
 1. cptactionhank's version does not contain a DB like PostgreSQL or MariaDB/MySQL.
-This is not a lack! Actually, it is good style and commendable, since Docker's
+This is not a lack! Actually, it is good style and recommendable, since Docker's
 concept is to link a DB-Container if you need one. But I wanted it as an
 as-simple-as-possible way to get started with Confluence, without having to care
  about setting up and linking another DB-Container.
@@ -21,7 +21,7 @@ Confluence which was powered by version 3.5.13 of the software to the recent
 version (which is 5.7.4, at the time of this writing). That's why all the
 ancient tags/branches are contained in this container.
 3. As of October, 20th 2015 this container doesn't use the java parent image anymore but
-debian:jessie.
+debian stable.
 
 There are multiple branches named like the corresponding version of [Atlassian Confluence](https://www.atlassian.com/software/confluence)
 it contains. Please see
@@ -52,7 +52,7 @@ the following on any Docker-Host:
     docker run -p 8080:8090 -d derjudge/confluence
 
 **Notice**: This is true for all versions, instead of `3.5.*`. Use the following
-for these instead (replace `3.5.17` with the version you want to start):
+for these instead (replace `3.5.17` with the version you want to start; mind the changed container port):
 
     docker run -p 8080:8080 -d derjudge/confluence:3.5.17
 
@@ -67,7 +67,7 @@ to host Confluence.
 
 You can determine that everything has started by the following:
 
-* CPU usage lowers significant
+* CPU usage lowers significantly
 * the line `INFO: Server startup in X ms` appears in `/usr/local/atlassian/confluence/logs/catalina.*.log` (inside the
 container; use [`docker-enter/nsenter`](https://github.com/jpetazzo/nsenter) to enter the container).
 * A ... "positive" line appears in `/usr/local/atlassian/confluence-data/logs/atlassian-confluence.log`. This will be
@@ -83,11 +83,11 @@ From this on, just follow [Atlassian's official setup guide](https://confluence.
 
 # Using included PostgreSQL database
 
-You can either use the internal file-based database to have Confluence initiate it's data structure or use any other
+You can either use Confluence's internal, file-based database to have Confluence initiate it's data structure or use any other
 Database System, the container can connect to. This can either be a PostgreSQL or MySQL/MariaDB database you are hosting
 in your network or you can use the PostgreSQL database included in this image.
 
-I (and Atlassian) **strongly** recommend to use the included PostgreSQL database or any external database, since the embedded
+I (and Atlassian) **strongly** recommend to use PostgreSQL database or any external database, since the embedded
 database is neither very reliable, nor scalable. Also, performance might be quite bad, compared to a mature (and tuned)
 DBMS. The PostgreSQL database which is included in this image is not optimized for speed, but for reliability and
  compatibility with a low amount of available resources to support as much hosts as possible, even when they consist of
