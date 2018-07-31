@@ -2,15 +2,16 @@ FROM debian:stretch
 MAINTAINER Marc Richter <mail@marc-richter.info>
 
 # setup useful environment variables
-ENV CONF_VERSION        6.8.1
+ENV CONF_VERSION        6.10.1
 ENV CONF_INST           /usr/local/atlassian/confluence
 ENV CONF_HOME           ${CONF_INST}-data
 ENV CONF_SETENV         ${CONF_INST}/bin/setenv.sh
 ENV PG_VERSION          9.6
-ENV JAVA_VERSION        1.8.0_162
-ENV JAVA_VERSION_SHORT  8u162
-ENV JAVA_VERSION_FULL   ${JAVA_VERSION_SHORT}-b12
-ENV JAVA_MD5            0da788060d494f5095bf8624735fa2f1
+ENV JAVA_MINOR          8
+ENV JAVA_UPDATE         181
+ENV JAVA_VERSION        1.${JAVA_MINOR}.0_${JAVA_UPDATE}
+ENV JAVA_VERSION_FULL   ${JAVA_VERSION_SHORT}-b13
+ENV JAVA_MD5            96a7b8442fe848ef90c96a2fad6ed6d1
 ENV JAVA_HOME           /opt/jdk/jdk${JAVA_VERSION}
 ENV DEBIAN_FRONTEND     noninteractive
 
@@ -51,7 +52,7 @@ RUN set -x \
 # Install Oracle JDK
 RUN mkdir -p /opt/jdk \
     && wget -q --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-        http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_FULL}/${JAVA_MD5}/jdk-${JAVA_VERSION_SHORT}-linux-x64.tar.gz -O - \
+        http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_FULL}/${JAVA_MD5}/jdk-${JAVA_MINOR}u${JAVA_UPDATE}-linux-x64.tar.gz -O - \
         | tar xfz - -C /opt/jdk
 RUN update-alternatives --install /usr/bin/java java /opt/jdk/jdk${JAVA_VERSION}/bin/java 100
 RUN update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk${JAVA_VERSION}/bin/javac 100
