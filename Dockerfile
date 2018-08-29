@@ -2,7 +2,7 @@ FROM debian:stretch
 MAINTAINER Marc Richter <mail@marc-richter.info>
 
 # setup useful environment variables
-ENV CONF_VERSION        6.10.1
+ENV CONF_VERSION        6.11.0
 ENV CONF_INST           /usr/local/atlassian/confluence
 ENV CONF_HOME           ${CONF_INST}-data
 ENV CONF_SETENV         ${CONF_INST}/bin/setenv.sh
